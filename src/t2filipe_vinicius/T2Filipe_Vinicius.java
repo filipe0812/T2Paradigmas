@@ -5,17 +5,26 @@
  */
 package t2filipe_vinicius;
 
+import java.sql.SQLException;
+import static t2filipe_vinicius.Metadata.getColumnsMetadata;
+import static t2filipe_vinicius.Metadata.getTablesMetadata;
+import static t2filipe_vinicius.Metadata.printGeneralMetadata;
+
 /**
  *
  * @author Filipe
  */
 public class T2Filipe_Vinicius {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
+        try {
+            printGeneralMetadata();
+            
+            // Print all the tables of the database scheme, with their names and
+            // structure
+            getColumnsMetadata(getTablesMetadata());
+        } catch (SQLException e) {
+            System.err.println("There was an error retrieving the metadata properties: " + e.getMessage());
+        }
     }
-    
 }

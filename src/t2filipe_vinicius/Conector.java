@@ -22,9 +22,9 @@ public class Conector {
         try {
 
                             
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("org.postgresql.Driver");
    
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/T1Paradigmas", "root", "123456");
+            connection = DriverManager.getConnection("jdbc:postgresql://localhost:3306/T2Paradigmas", "root", "123456");
  
  
             if (connection != null) {
