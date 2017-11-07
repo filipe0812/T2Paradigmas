@@ -10,12 +10,13 @@ import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 
 public class Metadata {
-
-    static Connection connection = null;
-    static DatabaseMetaData metadata = null;
+    private static Connection connection = null;
+    private static DatabaseMetaData metadata = null;
+    private static LinkedList<Tabela> tabelas = new LinkedList();
 
     // Static block for initialization
     static {
@@ -28,50 +29,52 @@ public class Metadata {
         }
     }
 
-
-    public static void printGeneralMetadata() throws SQLException {
-        System.out.println("Database Product Name: "
-                        + metadata.getDatabaseProductName());
-        System.out.println("Database Product Version: "
-                        + metadata.getDatabaseProductVersion());
-        System.out.println("Logged User: " + metadata.getUserName());
-        System.out.println("JDBC Driver: " + metadata.getDriverName());
-        System.out.println("Driver Version: " + metadata.getDriverVersion());
-        System.out.println("\n");
+    public static LinkedList<Tabela> getTables(){
+        tabelas = new LinkedList();
+        
+        try {
+            getColumnsMetadata(getTablesMetadata());
+        } catch (SQLException e) {
+            System.err.println("There was an error retrieving the metadata properties: " + e.getMessage());
+        }
+        
+        return tabelas;
     }
-
-
-    public static ArrayList getTablesMetadata() throws SQLException {
+    
+    private static ArrayList getTablesMetadata() throws SQLException {
         String table[] = { "TABLE" };
         ResultSet rs = null;
         ArrayList tables = null;
 
-        // receive the Type of the object in a String array.
+        //lê todos os nomes de tabelas e adiciona na lista de nomes
         rs = metadata.getTables(null, null, null, table);
         tables = new ArrayList();
         while (rs.next()) {
             String tableName = rs.getString("TABLE_NAME");
             if(!tableName.startsWith("sql_"))
-                tables.add(tableName);
-            
+                tables.add(tableName);    
         }
         return tables;
     }
 
     
-    public static void getColumnsMetadata(ArrayList<String> tables) throws SQLException {
+    private static void getColumnsMetadata(ArrayList<String> tables) throws SQLException {
         ResultSet rs = null;
         
-        // Print the columns properties of the actual table
+        
+        //varre todas as tabelas adicionado na lista de tabelas com as colunas
         for (String actualTable : tables) {
-            rs = metadata.getColumns(null, null, actualTable, null);
-            System.out.println(actualTable.toUpperCase());
+            
+            rs = metadata.getColumns(null, null, actualTable, null);            
+            Tabela tabelaAtual = new Tabela(actualTable);
+            
+            //varre todas as colunas da tabela adicionado elas na lista de tabelas
             while (rs.next()) {
-                System.out.println(rs.getString("COLUMN_NAME") + " "
-                                + rs.getString("TYPE_NAME") + " "
-                                + rs.getString("COLUMN_SIZE"));
+                tabelaAtual.addColuna(rs.getString("COLUMN_NAME"), rs.getString("TYPE_NAME"));
             }
-            System.out.println("\n");
+            
+            //adiciona a tabela na lista, com o nome e colunas inserido anteriormente 
+            tabelas.add(tabelaAtual);
         }
     }
 }

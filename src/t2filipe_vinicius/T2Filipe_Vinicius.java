@@ -5,10 +5,8 @@
  */
 package t2filipe_vinicius;
 
-import java.sql.SQLException;
-import static t2filipe_vinicius.Metadata.getColumnsMetadata;
-import static t2filipe_vinicius.Metadata.getTablesMetadata;
-import static t2filipe_vinicius.Metadata.printGeneralMetadata;
+import java.util.LinkedList;
+
 
 /**
  *
@@ -17,14 +15,19 @@ import static t2filipe_vinicius.Metadata.printGeneralMetadata;
 public class T2Filipe_Vinicius {
 
     public static void main(String[] args) {
-        try {
-         //   printGeneralMetadata();
+        LinkedList<Tabela> tabelas = Metadata.getTables();
+        
+        
+        //repete o loop para cada tabela dentro da lista
+        for(int x = 0; x < tabelas.size(); x++){
+            System.out.println(""); //extra enter
+            System.out.println("Nome da tabela: " + tabelas.get(x).getNome());
             
-            // Print all the tables of the database scheme, with their names and
-            // structure
-            getColumnsMetadata(getTablesMetadata());
-        } catch (SQLException e) {
-            System.err.println("There was an error retrieving the metadata properties: " + e.getMessage());
+            //repete o loop para cada coluna dentro da tabela
+            for(int y = 0; y < tabelas.get(x).getNumerColunas(); y++){
+                System.out.print("Coluna: " + tabelas.get(x).getColunaById(y).getNome());
+                System.out.println(", tipo: " + tabelas.get(x).getColunaById(y).getTipo());
+            } 
         }
     }
 }
