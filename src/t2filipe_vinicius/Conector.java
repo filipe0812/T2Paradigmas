@@ -24,7 +24,7 @@ public class Conector {
                             
             Class.forName("org.postgresql.Driver");
    
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:3306/T2Paradigmas", "root", "123456");
+            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "123456");
  
  
             if (connection != null) {

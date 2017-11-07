@@ -50,7 +50,10 @@ public class Metadata {
         rs = metadata.getTables(null, null, null, table);
         tables = new ArrayList();
         while (rs.next()) {
-            tables.add(rs.getString("TABLE_NAME"));
+            String tableName = rs.getString("TABLE_NAME");
+            if(!tableName.startsWith("sql_"))
+                tables.add(tableName);
+            
         }
         return tables;
     }
