@@ -22,6 +22,7 @@ public class T2Filipe_Vinicius {
             
             // Print all the tables of the database scheme, with their names and
             // structure
+            // ahuehauehaueh
             getColumnsMetadata(getTablesMetadata());
         } catch (SQLException e) {
             System.err.println("There was an error retrieving the metadata properties: " + e.getMessage());
