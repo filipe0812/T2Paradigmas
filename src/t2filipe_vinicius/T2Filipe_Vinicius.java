@@ -15,6 +15,8 @@ import java.util.LinkedList;
 public class T2Filipe_Vinicius {
 
     public static void main(String[] args) {
+        Criador gg = new Criador();
+        /*
         LinkedList<Tabela> tabelas = Metadata.getTables();
         
         
@@ -29,5 +31,6 @@ public class T2Filipe_Vinicius {
                 System.out.println(", tipo: " + tabelas.get(x).getColunaById(y).getTipo());
             } 
         }
+        */
     }
 }

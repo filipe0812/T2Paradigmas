@@ -24,6 +24,10 @@ public class Tabela {
         colunas.add(new Coluna(nome, tipo));
     }
     
+    public LinkedList<Coluna> getColunas() {    //adicionei 08/11
+        return colunas;
+    }
+    
     public int getNumerColunas(){
         return colunas.size();
     }
