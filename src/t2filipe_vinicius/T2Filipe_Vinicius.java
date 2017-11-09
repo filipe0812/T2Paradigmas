@@ -19,7 +19,7 @@ public class T2Filipe_Vinicius {
         
         //repete o loop para cada tabela dentro da lista
         for(int x = 0; x < tabelas.size(); x++){
-            System.out.println("Nome da tabela: " + tabelas.get(x).getNome());
+            System.out.println("Nome da tabela: " + tabelas.get(x).getNome() + ", PK: " + tabelas.get(x).getChavePrimaria());
             
             //repete o loop para cada coluna dentro da tabela
             for(int y = 0; y < tabelas.get(x).getNumerColunas(); y++){
