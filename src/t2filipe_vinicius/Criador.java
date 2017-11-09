@@ -45,7 +45,7 @@ public class Criador {
             //Finaliza a classe
             finalizarClasse();
             
-            System.out.format("Arquivo %s.java criado\n",nomeTabela); //confirma que o arquivo ja foi criado
+            System.out.format("Arquivo %s.java criado\n\n",nomeTabela); //confirma que o arquivo ja foi criado
         }
     }
     private static void iniciarClasse(String nomeTabela) {
@@ -75,7 +75,7 @@ public class Criador {
         file.format("}\n");
         file.close();
     }
-    private static String traduzTipoDado (String tipoDadoDB) {
+    private static String traduzTipoDado(String tipoDadoDB) {
         switch(tipoDadoDB) {
             case "varchar": return "String";
             case "int4": return "Integer";
