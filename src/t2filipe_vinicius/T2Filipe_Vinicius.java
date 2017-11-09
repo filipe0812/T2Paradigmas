@@ -13,24 +13,23 @@ import java.util.LinkedList;
  * @author Filipe
  */
 public class T2Filipe_Vinicius {
-
+    private static Criador gg;
     public static void main(String[] args) {
-        Criador gg = new Criador();
-        /*
         LinkedList<Tabela> tabelas = Metadata.getTables();
         
         
         //repete o loop para cada tabela dentro da lista
         for(int x = 0; x < tabelas.size(); x++){
-            System.out.println(""); //extra enter
             System.out.println("Nome da tabela: " + tabelas.get(x).getNome());
             
             //repete o loop para cada coluna dentro da tabela
             for(int y = 0; y < tabelas.get(x).getNumerColunas(); y++){
                 System.out.print("Coluna: " + tabelas.get(x).getColunaById(y).getNome());
                 System.out.println(", tipo: " + tabelas.get(x).getColunaById(y).getTipo());
-            } 
+            }
+            System.out.println(""); //extra enter
         }
-        */
+        
+        gg = new Criador(tabelas);
     }
 }

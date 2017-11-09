@@ -14,11 +14,10 @@ import java.util.Formatter;
  */
 public class Criador {
     private static Formatter file;
-    public Criador() {
-        LinkedList<Tabela> tabelas = Metadata.getTables();
+    public Criador(LinkedList<Tabela> tabelas) {
         for(Tabela tabela: tabelas) {
             String nomeTabela = tabela.getNome();
-            String endereco = null;
+            String endereco;
             if(System.getProperty("os.name").contains("Linux"))
                 endereco = "/media/Shared/"+nomeTabela+".java";
             else
@@ -31,7 +30,7 @@ public class Criador {
             }
             
             //Cria a classe
-            iniciarClasse(nomeTabela); //nomeClasse: primeira letra maiuscula
+            iniciarClasse(nomeTabela);
             
             //Cria os Atributos
             for(Coluna coluna: tabela.getColunas()) {
