@@ -19,12 +19,12 @@ public class Criador {
             String nomeTabela = tabela.getNome();
             String endereco;
             if(System.getProperty("os.name").contains("Linux"))
-                endereco = "/media/Shared/"+nomeTabela+".java";
+                endereco = "/home/armitage/Desktop/"+nomeTabela+".java";
             else
                 endereco = "c:\\"+nomeTabela+".java";   //TODO arrumar endereço windows
             try {
                 file = new Formatter(endereco);
-            } catch (FileNotFoundException e) {
+            } catch (Exception e) {
                 System.out.println("Erro em: \"file = new Formatter(endereco)\"");
                 return;
             }
@@ -79,8 +79,11 @@ public class Criador {
         switch(tipoDadoDB) {
             case "varchar": return "String";
             case "int4": return "Integer";
+            case "int8": return "Integer";
+            case "float8": return "double";
+            case "bool": return "boolean";
             //TODO adicionar mais tipos de dados
         }
-        return "void";
+        return "String";
     }
 }
