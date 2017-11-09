@@ -34,12 +34,12 @@ public class Criador {
             
             //Cria os Atributos
             for(Coluna coluna: tabela.getColunas()) {
-                criarAtributos(coluna.getNome().toLowerCase(),coluna.getTipo());
+                criarAtributos(coluna.getNome(),coluna.getTipo());
             }
             
             //Cria os getters e setters
             for(Coluna coluna: tabela.getColunas()) {
-                criarMetodos(coluna.getNome().toLowerCase(),coluna.getTipo());
+                criarMetodos(coluna.getNome(),coluna.getTipo());
             }
             
             //Finaliza a classe
@@ -53,23 +53,19 @@ public class Criador {
         file.format("class %s {\n",nomeClasse);
     }
     private static void criarAtributos(String nomeColuna, String tipoColuna) {
-        String tipoDado = tipoColuna;
-        switch(tipoDado) {
-            case "varchar": tipoDado = "String";break;
-            case "int4": tipoDado = "Integer";break;
-            //TODO adicionar mais tipos de dados
-        }
+        String nomeAtributo = nomeColuna.toLowerCase();
+        
+        String tipoDado = traduzTipoDado(tipoColuna);
         //escreve atributo
-        file.format("\tprivate %s %s;\n", tipoDado, nomeColuna);
+        file.format("\tprivate %s %s;\n", tipoDado, nomeAtributo);
     }
     private static void criarMetodos(String nomeColuna, String tipoColuna) {
+        nomeColuna = nomeColuna.toLowerCase();
+        
         String nomeMetodo = nomeColuna.substring(0, 1).toUpperCase().concat(nomeColuna.substring(1)); //primeira maiuscula
-        String tipoDado = tipoColuna;
-        switch(tipoDado) {
-            case "varchar": tipoDado = "String";break;
-            case "int4": tipoDado = "Integer";break;
-            //TODO adicionar mais tipos de dados
-        }
+        
+        String tipoDado = traduzTipoDado(tipoColuna);
+        
         //escreve set
         file.format("\n\tpublic void set%s(%s %s) {\n\t\tthis.%s = %s;\n\t}\n",nomeMetodo,tipoDado,nomeColuna,nomeColuna,nomeColuna);
         //escreve get
@@ -79,7 +75,12 @@ public class Criador {
         file.format("}\n");
         file.close();
     }
+    private static String traduzTipoDado (String tipoDadoDB) {
+        switch(tipoDadoDB) {
+            case "varchar": return "String";
+            case "int4": return "Integer";
+            //TODO adicionar mais tipos de dados
+        }
+        return "void";
+    }
 }
-
-
-// ao inves de colocar aqueles 2 switch's da pra fazer um metodo so pra "traduzir" o tipo do dado
