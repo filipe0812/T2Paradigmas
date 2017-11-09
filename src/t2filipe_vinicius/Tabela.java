@@ -14,14 +14,30 @@ import java.util.LinkedList;
 public class Tabela {
     private LinkedList<Coluna> colunas;
     private String nome;
+    private String chavePrimaria;
+    private boolean createDAO;
     
-    public Tabela(String n){
+    public Tabela(String n, String key){
         nome = n;
+        chavePrimaria = key;
+        createDAO = true;
         colunas = new LinkedList();
+    }
+    
+    public void setCreateDaoFalse(){
+        createDAO = false;
+    }
+    
+    public boolean getCreateDAO(){
+        return createDAO;
     }
     
     public void addColuna(String nome, String tipo){
         colunas.add(new Coluna(nome, tipo));
+    }
+    
+    public String getChavePrimaria(){
+        return chavePrimaria;
     }
     
     public LinkedList<Coluna> getColunas() {    //adicionei 08/11

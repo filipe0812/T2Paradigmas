@@ -60,19 +60,40 @@ public class Metadata {
     
     private static void getColumnsMetadata(ArrayList<String> tables) throws SQLException {
         ResultSet rs = null;
+        ResultSet pKey = null;
+        Tabela tabelaAtual = null;
         
         
-        //varre todas as tabelas adicionado na lista de tabelas com as colunas
+        //varre todas as tabelas adicionando na lista de tabelas com as colunas
         for (String actualTable : tables) {
             
-            rs = metadata.getColumns(null, null, actualTable, null);            
-            Tabela tabelaAtual = new Tabela(actualTable);
+            rs = metadata.getColumns(null, null, actualTable, null); 
+            pKey = metadata.getPrimaryKeys(null, null, actualTable);
+            
+            //se não tem chave primária nem adiciona a tabela
+            if(pKey.next()){
+                
+                //cria a tabela com o nome e o nome da chave primaria
+                tabelaAtual = new Tabela(actualTable, pKey.getString("COLUMN_NAME"));
+
+                if(pKey.next()){
+                    //se tem mais de uma chave primaria não cria DAO
+                    tabelaAtual.setCreateDaoFalse();
+                    System.err.println("Tabela " + actualTable + " com mais de uma chave primaria nao sera criado classe DAO");
+                }
+            }
+            else{
+                //cria a tabela sem chave primaria
+                tabelaAtual = new Tabela(actualTable, "");
+                tabelaAtual.setCreateDaoFalse();
+                System.err.println("Tabela " + actualTable + " sem chave primaria nao sera criado classe DAO");
+            }
             
             //varre todas as colunas da tabela adicionado elas na lista de tabelas
             while (rs.next()) {
                 tabelaAtual.addColuna(rs.getString("COLUMN_NAME"), rs.getString("TYPE_NAME"));
             }
-            
+
             //adiciona a tabela na lista, com o nome e colunas inserido anteriormente 
             tabelas.add(tabelaAtual);
         }
