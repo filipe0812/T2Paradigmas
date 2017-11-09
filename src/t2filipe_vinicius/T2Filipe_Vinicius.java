@@ -13,7 +13,6 @@ import java.util.LinkedList;
  * @author Filipe
  */
 public class T2Filipe_Vinicius {
-    private static Criador gg;
     public static void main(String[] args) {
         LinkedList<Tabela> tabelas = Metadata.getTables();
         
@@ -30,6 +29,6 @@ public class T2Filipe_Vinicius {
             System.out.println(""); //extra enter
         }
         
-        gg = new Criador(tabelas);
+        new Criador(tabelas);
     }
 }
