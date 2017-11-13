@@ -52,7 +52,7 @@ public class Criador {
     private static void iniciarClasse(String nomeTabela) {
         String nomeClasse = nomeTabela.substring(0, 1).toUpperCase().concat(nomeTabela.substring(1));
         //nome da classe e abre chaves
-        file.format("class %s {\n",nomeClasse);
+        file.format("public class %s {\n",nomeClasse);
     }
     private static void criarAtributos(String nomeColuna, String tipoColuna) {
         String nomeAtributo = nomeColuna.toLowerCase();
