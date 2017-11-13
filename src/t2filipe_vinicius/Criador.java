@@ -18,10 +18,10 @@ public class Criador {
         for(Tabela tabela: tabelas) {
             String nomeTabela = tabela.getNome();
             String endereco;
-            if(System.getProperty("os.name").contains("Linux"))
+            if(System.getProperty("os.name").contains("Linux"))             //TODO: pagar endereço como parametro na main
                 endereco = "/home/armitage/Desktop/"+nomeTabela+".java";
             else
-                endereco = "c:\\"+nomeTabela+".java";   //TODO arrumar endereço windows
+                endereco = "c:\\"+nomeTabela+".java";
             try {
                 file = new Formatter(endereco);
             } catch (Exception e) {
@@ -45,11 +45,13 @@ public class Criador {
             //Finaliza a classe
             finalizarClasse();
             
-            System.out.format("Arquivo %s.java criado\n\n",nomeTabela); //confirma que o arquivo ja foi criado
+            //confirma que o arquivo ja foi criado
+            System.out.format("Arquivo %s.java criado\n\n",nomeTabela);
         }
     }
     private static void iniciarClasse(String nomeTabela) {
-        String nomeClasse = nomeTabela.substring(0, 1).toUpperCase().concat(nomeTabela.substring(1)); //primeira maiuscula
+        String nomeClasse = nomeTabela.substring(0, 1).toUpperCase().concat(nomeTabela.substring(1));
+        //nome da classe e abra chaves
         file.format("class %s {\n",nomeClasse);
     }
     private static void criarAtributos(String nomeColuna, String tipoColuna) {
@@ -62,7 +64,7 @@ public class Criador {
     private static void criarMetodos(String nomeColuna, String tipoColuna) {
         nomeColuna = nomeColuna.toLowerCase();
         
-        String nomeMetodo = nomeColuna.substring(0, 1).toUpperCase().concat(nomeColuna.substring(1)); //primeira maiuscula
+        String nomeMetodo = nomeColuna.substring(0, 1).toUpperCase().concat(nomeColuna.substring(1));
         
         String tipoDado = traduzTipoDado(tipoColuna);
         
@@ -72,10 +74,12 @@ public class Criador {
         file.format("\tpublic %s get%s() {\n\t\treturn this.%s;\n\t}\n", tipoDado, nomeMetodo, nomeColuna);
     }
     private static void finalizarClasse() {
+        //fecha chaves e fecha arquivo
         file.format("}\n");
         file.close();
     }
-    private static String traduzTipoDado(String tipoDadoDB) {
+    private static String traduzTipoDado(String tipoDadoDB) { 
+        //TODO: talvez transformar em um metodo da main, que possa ser chamado nas classes Criador e CriadorDAO da mesma forma como e chamado na linha 59 e 68
         switch(tipoDadoDB) {
             case "varchar": return "String";
             case "int4": return "Integer";
@@ -84,6 +88,6 @@ public class Criador {
             case "bool": return "boolean";
             //TODO adicionar mais tipos de dados
         }
-        return "String";
+        return "String"; //Default
     }
 }
