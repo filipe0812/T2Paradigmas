@@ -17,7 +17,7 @@ public class Criador {
         for(Tabela tabela: tabelas) {
             String nomeTabela = tabela.getNome();
             String endereco;
-            if(System.getProperty("os.name").contains("Linux"))             //TODO: pagar endereço como parametro na main
+            if(System.getProperty("os.name").contains("Linux"))             //TODO: pegar endereço como parametro na main
                 endereco = "/home/armitage/Desktop/"+nomeTabela+".java";
             else
                 endereco = "c:\\"+nomeTabela+".java";
@@ -77,7 +77,7 @@ public class Criador {
         file.format("}\n");
         file.close();
     }
-    private static String traduzTipoDado(String tipoDadoDB) { 
+    public static String traduzTipoDado(String tipoDadoDB) { 
         //TODO: talvez transformar em um metodo da main, que possa ser chamado nas classes Criador e CriadorDAO da mesma forma como e chamado na linha 59 e 68
         switch(tipoDadoDB) {
             case "varchar": return "String";
