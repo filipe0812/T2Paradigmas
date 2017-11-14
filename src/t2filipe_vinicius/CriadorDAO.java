@@ -30,13 +30,17 @@ public class CriadorDAO {
                 return;
             }
             
-            
+            //Cria a classe
+            iniciarClasseDAO(nomeTabela);
+      
     }
-    private static void iniciarClasse() {
-        
+    private static void iniciarClasseDAO(String nomeTabela) {
+        String nomeClasse = nomeTabela.substring(0, 1).toUpperCase().concat(nomeTabela.substring(1));
+        //nome da classeDAO e abre chaves
+        file.format("public class %sDAO {\n",nomeClasse);
     }
     private static void criarMetodoAbrirConexao() {
-        
+        file.format("\tpublic Connection abrir() {\n\t\tConnection c = null;\n\t\ttry {\n\t\t\tClass.forName(BD.JDBC_DRIVER);\n\t\t}\n\t\tcatch (ClassNotFoundException e) {\n\t\t\tSystem.err.println(\"O Driver não foi encontrado na memória.\");\n\t\t}\n\t\ttry {\n\t\t\tc = DriverManager.getConnection(BD.URL_CONEXAO, BD.USUARIO, BD.SENHA);\n\t\t}\n\t\tcatch (SQLException e) {\n\t\t\te.printStackTrace();\n\t\t}\n\t\treturn c;\n\t}\n");
     }
     private static void criarMetodoInserir() {
         
@@ -53,7 +57,7 @@ public class CriadorDAO {
     private static void criarMetodoBuscarTodos() {
         
     }
-    private static void finalizarClasse() {
+    private static void finalizarClasseDAO() {
         
     }
 }
