@@ -16,11 +16,12 @@ public class Criador {
     public Criador(LinkedList<Tabela> tabelas) {
         for(Tabela tabela: tabelas) {
             String nomeTabela = tabela.getNome();
+            String nomeClasse = nomeTabela.substring(0, 1).toUpperCase().concat(nomeTabela.substring(1));
             String endereco;
             if(System.getProperty("os.name").contains("Linux"))             //TODO: pegar endereço como parametro na main
-                endereco = "/home/armitage/Desktop/"+nomeTabela+".java";
+                endereco = "/home/armitage/Desktop/"+nomeClasse+".java";
             else
-                endereco = "c:\\"+nomeTabela+".java";
+                endereco = "c:\\"+nomeClasse+".java";
             try {
                 file = new Formatter(endereco);
             } catch (Exception e) {
@@ -29,7 +30,7 @@ public class Criador {
             }
             
             //Cria a classe
-            iniciarClasse(nomeTabela);
+            iniciarClasse(nomeClasse);
             
             //Cria os Atributos
             for(Coluna coluna: tabela.getColunas()) {
@@ -48,8 +49,7 @@ public class Criador {
             System.out.format("Arquivo %s.java criado\n\n",nomeTabela);
         }
     }
-    private static void iniciarClasse(String nomeTabela) {
-        String nomeClasse = nomeTabela.substring(0, 1).toUpperCase().concat(nomeTabela.substring(1));
+    private static void iniciarClasse(String nomeClasse) {
         //nome da classe e abre chaves
         file.format("public class %s {\n",nomeClasse);
     }
