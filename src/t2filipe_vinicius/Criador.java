@@ -5,7 +5,6 @@
  */
 package t2filipe_vinicius;
 
-import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.Formatter;
 /**

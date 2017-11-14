@@ -5,7 +5,6 @@
  */
 package t2filipe_vinicius;
 
-import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.Formatter;
 /**
@@ -32,7 +31,7 @@ public class CriadorDAO {
             
             //Cria a classe
             iniciarClasseDAO(nomeTabela);
-      
+        }
     }
     private static void iniciarClasseDAO(String nomeTabela) {
         String nomeClasse = nomeTabela.substring(0, 1).toUpperCase().concat(nomeTabela.substring(1));
