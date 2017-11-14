@@ -36,9 +36,11 @@ public class CriadorDAO {
             //Cria primeiro metodo de comunicaçao com o banco de dados
             criarMetodoAbrirConexao();
             
-            //Cria Metodo para inserir dados na tabela do banco de dados
+            //Cria metodo para inserir dados na tabela do banco de dados
             criarMetodoInserir(tabela);
             
+            //Cria metodo que retorna todos objetos na tabela
+            criarMetodoBuscarTodos(tabela);
             
             //fecha chaves e fecha arquivo
             finalizarClasseDAO();
@@ -57,34 +59,34 @@ public class CriadorDAO {
     private static void criarMetodoInserir(Tabela t) {
         String nomeTabela = t.getNome();
         String nomeClasse = nomeTabela.substring(0, 1).toUpperCase().concat(nomeTabela.substring(1));
-        String metodo1 = "\tpublic void inserir("+nomeClasse+" x) {\n\t\tConnection conexao = abrir();\n\t\ttry {\n\t\t\tPreparedStatement ps = conexao.prepareStatement(\"INSERT INTO "+nomeTabela+" (";
+        String metodo = "\tpublic void inserir("+nomeClasse+" x) {\n\t\tConnection conexao = abrir();\n\t\ttry {\n\t\t\tPreparedStatement ps = conexao.prepareStatement(\"INSERT INTO "+nomeTabela+" (";
         int numeroColunas = t.getNumerColunas();
         int z=0;
         for(Coluna coluna: t.getColunas()) {
             z++;
-            metodo1 += coluna.getNome();
+            metodo += coluna.getNome();
             if(z==numeroColunas)
                 break;
-            metodo1 += ", ";
+            metodo += ", ";
         }
-        metodo1 += ") VALUES (";
+        metodo += ") VALUES (";
         for(int x=0; x<numeroColunas; x++) {
-            metodo1 += "?";
+            metodo += "?";
             if(x==(numeroColunas-1))
-                metodo1 +=")\");\n";
+                metodo +=")\");\n";
             else
-                metodo1 +=", ";
+                metodo +=", ";
         }
         int y = 0;
         for(Coluna coluna: t.getColunas()) {
             y ++;
             String tipo = Criador.traduzTipoDado(coluna.getTipo());
             String nomeMetodoGet = coluna.getNome();
-            metodo1 += "\t\t\tps.set"+tipo.substring(0, 1).toUpperCase().concat(tipo.substring(1))+"("+y+", x.get"+nomeMetodoGet.substring(0, 1).toUpperCase().concat(nomeMetodoGet.substring(1))+"());\n" ;
+            metodo += "\t\t\tps.set"+tipo.substring(0, 1).toUpperCase().concat(tipo.substring(1))+"("+y+", x.get"+nomeMetodoGet.substring(0, 1).toUpperCase().concat(nomeMetodoGet.substring(1))+"());\n" ;
         }
-        metodo1 += "\t\t}\n\t\tcatch (SQLException e) {\n\t\t\te.printStackTrace();\n\t\t}\n\t}\n";
+        metodo += "\t\t}\n\t\tcatch (SQLException e) {\n\t\t\te.printStackTrace();\n\t\t}\n\t}\n";
         
-        file.format(metodo1);
+        file.format(metodo);
     }
     private static void criarMetodoAlterar() {
         
@@ -93,10 +95,20 @@ public class CriadorDAO {
         
     }
     private static void criarMetodoBuscarUm() {
-        
+        //nao sei se precisa desse metodo
     }
-    private static void criarMetodoBuscarTodos() {
-        
+    private static void criarMetodoBuscarTodos(Tabela t) {
+        String nomeTabela = t.getNome();
+        String nomeClasse = nomeTabela.substring(0, 1).toUpperCase().concat(nomeTabela.substring(1));
+        String metodo = "\tpublic Collection<"+nomeClasse+"> buscarTodos() {\n\t\tConnection conexao = abrir();\n\t\tCollection<"+nomeClasse+"> x = new ArrayList<"+nomeClasse+">();\n\t\ttry {\n\t\t\tStatement s = conexao.createStatement();\n\t\t\tResultSet rs = s.executeQuery(\"SELECT * FROM "+nomeTabela+"\");\n\t\t\twhile (rs.next()) {\n\t\t\t\t"+nomeClasse+" temp = new "+nomeClasse+"();\n";
+        for(Coluna coluna: t.getColunas()) {
+            String nomeAtributo = coluna.getNome();
+            String tipo = Criador.traduzTipoDado(coluna.getTipo());
+            tipo = tipo.substring(0, 1).toUpperCase().concat(tipo.substring(1));
+            metodo += "\t\t\t\ttemp.set"+nomeAtributo.substring(0, 1).toUpperCase().concat(nomeAtributo.substring(1))+"(rs.get"+tipo+"(\""+nomeAtributo+"\"));\n";
+        }
+        metodo += "\t\t\t\tx.add(temp);\n\t\t\t}\n\t\t\trs.close();\n\t\t\tconexao.close();\n\t\t}\n\t\tcatch (SQLException e) {\n\t\t\te.printStackTrace();\n\t\t}\n\t\treturn x;\n\t}\n";
+        file.format(metodo);
     }
     private static void finalizarClasseDAO() {
         file.format("}\n");
