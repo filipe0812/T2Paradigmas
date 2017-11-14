@@ -30,5 +30,6 @@ public class T2Filipe_Vinicius {
         }
         
         new Criador(tabelas);
+        new CriadorDAO(tabelas);
     }
 }
