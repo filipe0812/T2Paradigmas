@@ -20,7 +20,7 @@ public class Metadata {
 
     // Static block for initialization
     static {
-        connection = Conector.getConexaoMySQL();
+        connection = Conector.getDBConection();
 
         try {
             metadata = connection.getMetaData();
@@ -37,6 +37,8 @@ public class Metadata {
         } catch (SQLException e) {
             System.err.println("There was an error retrieving the metadata properties: " + e.getMessage());
         }
+        
+        Conector.FecharConexao();
         
         return tabelas;
     }

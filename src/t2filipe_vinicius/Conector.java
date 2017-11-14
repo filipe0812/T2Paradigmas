@@ -15,16 +15,28 @@ import java.sql.SQLException;
  */
 public class Conector {
     private static String status = "Não conectou...";
+    private static Connection connection = null;
     
-    public static Connection getConexaoMySQL() {
+    private static String driverDB;
+    private static String urlDB;
+    private static String userDB;
+    private static String loginDB;
+    
+    public static void configDB(String driver, String url, String user, String login){
+        driverDB = driver;
+        urlDB = url;
+        userDB = user;
+        loginDB = login;
+    }
+    
+    public static Connection getDBConection() {
         
-        Connection connection = null;          
+        connection = null;          
         try {
-
                             
-            Class.forName("org.postgresql.Driver");
+            Class.forName(driverDB);
    
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "123456");
+            connection = DriverManager.getConnection(urlDB, userDB, loginDB);
  
  
             if (connection != null) {
@@ -50,7 +62,7 @@ public class Conector {
     
     public static boolean FecharConexao() {
         try {
-            getConexaoMySQL().close();
+            connection.close();
             return true;
         } catch (SQLException e) {
             return false;
@@ -61,7 +73,7 @@ public class Conector {
     public static Connection ReiniciarConexao() {
         FecharConexao();
 
-        return getConexaoMySQL();
+        return getDBConection();
     }
 
     

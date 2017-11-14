@@ -13,7 +13,7 @@ import java.util.Formatter;
  */
 public class Criador {
     private static Formatter file;
-    public Criador(LinkedList<Tabela> tabelas) {
+    public Criador(LinkedList<Tabela> tabelas, String folder) {
         for(Tabela tabela: tabelas) {
             String nomeTabela = tabela.getNome();
             String nomeClasse = nomeTabela.substring(0, 1).toUpperCase().concat(nomeTabela.substring(1));
@@ -21,11 +21,11 @@ public class Criador {
             if(System.getProperty("os.name").contains("Linux"))             //TODO: pegar endereço como parametro na main
                 endereco = "/home/armitage/Desktop/"+nomeClasse+".java";
             else
-                endereco = "c:\\"+nomeClasse+".java";
+                endereco = folder+nomeClasse+".java";
             try {
                 file = new Formatter(endereco);
             } catch (Exception e) {
-                System.out.println("Erro em: \"file = new Formatter(endereco)\"");
+                System.err.println("Erro em: \"file = new Formatter("+endereco+")\"");
                 return;
             }
             
@@ -51,7 +51,8 @@ public class Criador {
     }
     private static void iniciarClasse(String nomeClasse) {
         //nome da classe e abre chaves
-        file.format("public class %s {\n",nomeClasse);
+        
+        file.format("/* Arquivo gerado automaticamente pelo gerador de classes\n T2 Paradigmas UFSM - Filipe e Vinícius\n*/\n\npackage t2filipe_vinicius;\n\n\npublic class %s {\n",nomeClasse);
     }
     private static void criarAtributos(String nomeColuna, String tipoColuna) {
         String nomeAtributo = nomeColuna.toLowerCase();
@@ -81,8 +82,8 @@ public class Criador {
         //TODO: talvez transformar em um metodo da main, que possa ser chamado nas classes Criador e CriadorDAO da mesma forma como e chamado na linha 59 e 68
         switch(tipoDadoDB) {
             case "varchar": return "String";
-            case "int4": return "Integer";
-            case "int8": return "Integer";
+            case "int4": return "int";
+            case "int8": return "int";
             case "float8": return "double";
             case "bool": return "boolean";
             //TODO adicionar mais tipos de dados
