@@ -10,7 +10,7 @@ package t2filipe_vinicius;
  * @author Filipe
  */
 public class Coluna {
-    private String nome, tipo;
+    private final String nome, tipo;
     
     public Coluna(String n, String t){
         nome = n;

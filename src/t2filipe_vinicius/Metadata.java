@@ -72,7 +72,7 @@ public class Metadata {
             rs = metadata.getColumns(null, null, actualTable, null); 
             pKey = metadata.getPrimaryKeys(null, null, actualTable);
             
-            //se não tem chave primária nem adiciona a tabela
+            //testa se tem chave primaria
             if(pKey.next()){
                 
                 //cria a tabela com o nome e o nome da chave primaria
@@ -81,14 +81,14 @@ public class Metadata {
                 if(pKey.next()){
                     //se tem mais de uma chave primaria não cria DAO
                     tabelaAtual.setCreateDaoFalse();
-                    System.err.println("Tabela " + actualTable + " com mais de uma chave primaria nao sera criado classe DAO");
+                    System.err.println("Tabela " + actualTable + " com mais de uma chave primaria nao sera criado classe DAO e Exemplo");
                 }
             }
             else{
                 //cria a tabela sem chave primaria
                 tabelaAtual = new Tabela(actualTable, "");
                 tabelaAtual.setCreateDaoFalse();
-                System.err.println("Tabela " + actualTable + " sem chave primaria nao sera criado classe DAO");
+                System.err.println("Tabela " + actualTable + " sem chave primaria nao sera criado classe DAO e exemplo");
             }
             
             //varre todas as colunas da tabela adicionado elas na lista de tabelas

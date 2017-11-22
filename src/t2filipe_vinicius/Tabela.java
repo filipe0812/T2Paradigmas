@@ -12,15 +12,19 @@ import java.util.LinkedList;
  * @author Filipe
  */
 public class Tabela {
-    private LinkedList<Coluna> colunas;
-    private String nome;
-    private String chavePrimaria;
+    private final LinkedList<Coluna> colunas;
+    private final String nome;
+    private final String chavePrimaria;
     private boolean createDAO;
+    private boolean hasSpaces;
     
     public Tabela(String n, String key){
         nome = n;
         chavePrimaria = key;
         createDAO = true;
+        
+        hasSpaces = n.contains(" ") || key.contains(" ");
+        
         colunas = new LinkedList();
     }
     
@@ -32,8 +36,15 @@ public class Tabela {
         return createDAO;
     }
     
+    public boolean getHasSpaces(){
+        return hasSpaces;
+    }
+    
     public void addColuna(String nome, String tipo){
         colunas.add(new Coluna(nome, tipo));
+        if(nome.contains(" ")){
+            hasSpaces = true;
+        }
     }
     
     public String getChavePrimaria(){

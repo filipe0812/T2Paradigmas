@@ -8,6 +8,8 @@ package t2filipe_vinicius;
 import java.util.LinkedList;
 
 
+
+
 /**
  *
  * @author Filipe
@@ -27,20 +29,19 @@ public class T2Filipe_Vinicius {
         //acessa o banco e copia todos os dados necessários para a memória
         LinkedList<Tabela> tabelas = Metadata.getTables();
         
+        System.out.println("\nExecutando criador:");
+        new Criador       (tabelas, 
+                "C:\\Users\\Filipe\\Google Drive\\Trabalho\\Projects\\Net Beans - java\\Trabalho02Paradigmas\\T2Filipe_Vinicius\\src\\t2filipe_vinicius\\generated\\", 
+                "/home/armitage/Desktop/");
         
-        //repete o loop para cada tabela dentro da lista só pra mostrar na tela
-        for(int x = 0; x < tabelas.size(); x++){
-            System.out.println("Nome da tabela: " + tabelas.get(x).getNome() + ", PK: " + tabelas.get(x).getChavePrimaria());
-            
-            //repete o loop para cada coluna dentro da tabela
-            for(int y = 0; y < tabelas.get(x).getNumerColunas(); y++){
-                System.out.print("Coluna: " + tabelas.get(x).getColunaById(y).getNome());
-                System.out.println(", tipo: " + tabelas.get(x).getColunaById(y).getTipo());
-            }
-            System.out.println(""); //extra enter
-        }
+        System.out.println("\nExecutando criador DAO:");
+        new CriadorDAO    (tabelas, 
+                "C:\\Users\\Filipe\\Google Drive\\Trabalho\\Projects\\Net Beans - java\\Trabalho02Paradigmas\\T2Filipe_Vinicius\\src\\t2filipe_vinicius\\generated\\", 
+                "/home/armitage/Desktop/");
         
-        new Criador(tabelas, "C:\\trab2Para\\");
-        new CriadorDAO(tabelas, "C:\\trab2Para\\");
+        System.out.println("\nExecutando criador Exemplo:");
+        new CriadorExemplo(tabelas, 
+                "C:\\Users\\Filipe\\Google Drive\\Trabalho\\Projects\\Net Beans - java\\Trabalho02Paradigmas\\T2Filipe_Vinicius\\src\\t2filipe_vinicius\\generated\\", 
+                "/home/armitage/Desktop/");
     }
 }
