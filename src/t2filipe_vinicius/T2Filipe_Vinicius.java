@@ -1,19 +1,13 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * T2 paradigmas UFSM 2017/2
+ * Filipe Albanio e Vinicius Bohrer
+ * Para salvar os arquivos em uma pasta diferente, só editar o path na chamada do criador que quiser modificar
  */
 package t2filipe_vinicius;
 
 import java.util.LinkedList;
 
 
-
-
-/**
- *
- * @author Filipe
- */
 public class T2Filipe_Vinicius {
     public final class DBinfo{
         public final static String driver = "org.postgresql.Driver";
@@ -29,19 +23,19 @@ public class T2Filipe_Vinicius {
         //acessa o banco e copia todos os dados necessários para a memória
         LinkedList<Tabela> tabelas = Metadata.getTables();
         
-        System.out.println("\nExecutando criador:");
+        System.out.println("\n\nExecutando criador:\n");
         new Criador       (tabelas, 
-                "C:\\Users\\Filipe\\Google Drive\\Trabalho\\Projects\\Net Beans - java\\Trabalho02Paradigmas\\T2Filipe_Vinicius\\src\\t2filipe_vinicius\\generated\\", 
+                "C:\\", 
                 "/home/armitage/Desktop/");
         
-        System.out.println("\nExecutando criador DAO:");
+        System.out.println("\n\nExecutando criador DAO:\n");
         new CriadorDAO    (tabelas, 
-                "C:\\Users\\Filipe\\Google Drive\\Trabalho\\Projects\\Net Beans - java\\Trabalho02Paradigmas\\T2Filipe_Vinicius\\src\\t2filipe_vinicius\\generated\\", 
+                "C:\\", 
                 "/home/armitage/Desktop/");
         
-        System.out.println("\nExecutando criador Exemplo:");
+        System.out.println("\n\nExecutando criador Exemplo:\n");
         new CriadorExemplo(tabelas, 
-                "C:\\Users\\Filipe\\Google Drive\\Trabalho\\Projects\\Net Beans - java\\Trabalho02Paradigmas\\T2Filipe_Vinicius\\src\\t2filipe_vinicius\\generated\\", 
+                "C:\\", 
                 "/home/armitage/Desktop/");
     }
 }
